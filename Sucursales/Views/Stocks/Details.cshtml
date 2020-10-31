@@ -1,0 +1,75 @@
+﻿@model Sucursales.Models.Stock
+
+@{
+    ViewBag.Title = "Historial";
+}
+
+<div>
+    <dl class="text-light row row-cols-2 w-50">
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branch.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+    </dl>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>
+                    Cantidad
+                </th>
+                <th>
+                    Entada o salida
+                </th>
+                <th>
+                    Fecha
+                </th>
+            </tr>
+
+        </thead>
+        @foreach (var item in Model.StockHistories)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amounth)
+                </td>
+                <td>
+                    @if (item.Entity)
+                    {
+                        <i class="fas fa-arrow-up text-success"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-arrow-down text-danger"></i>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+               
+            </tr>
+        }
+
+    </table>
+</div>
+

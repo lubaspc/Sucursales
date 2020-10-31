@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    @RenderSection("scripts", required: false)
+}
+<h2 class="text-light">@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row row-cols-1 px-5 text-light">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @RenderBody()
+
+    </div>
+}

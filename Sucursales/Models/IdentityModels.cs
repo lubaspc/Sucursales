@@ -25,12 +25,18 @@ namespace Sucursales.Models
         {
         }
 
+        public DbSet<Product> Product { get; set; }
+        public DbSet<Address> Address { get; set; }
+        public DbSet<Branch> Branch{ get; set; }
+        public DbSet<Sale> Sale { get; set; }
+        public DbSet<SalesProduct> SalesProduct { get; set; }
+        public DbSet<Stock> Stock { get; set; }
+        public DbSet<StockHistory> StockHistory { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-
-      
 
     }
 }

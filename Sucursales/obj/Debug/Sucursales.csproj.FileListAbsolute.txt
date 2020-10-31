@@ -125,3 +125,6 @@ C:\Users\lubas\source\repos\Sucursales\Sucursales\obj\Debug\Sucursales.csproj.Co
 C:\Users\lubas\source\repos\Sucursales\Sucursales\obj\Debug\Sucursales.csproj.CopyComplete
 C:\Users\lubas\source\repos\Sucursales\Sucursales\obj\Debug\Sucursales.dll
 C:\Users\lubas\source\repos\Sucursales\Sucursales\obj\Debug\Sucursales.pdb
+C:\Users\lubas\source\repos\Sucursales\Sucursales\obj\Debug\Sucursales.Migrations.initial_migration.resources
+C:\Users\lubas\source\repos\Sucursales\Sucursales\obj\Debug\Sucursales.csproj.GenerateResource.cache
+C:\Users\lubas\source\repos\Sucursales\Sucursales\obj\Debug\Sucursales.Migrations.updatesale.resources

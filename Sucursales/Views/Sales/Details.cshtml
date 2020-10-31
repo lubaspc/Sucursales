@@ -1,0 +1,57 @@
+﻿@model Sucursales.Models.Sale
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="text-light">Detalle de compra</h2>
+
+<div class="text-light">
+    <dl class="row row-cols-2 w-50">
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branch.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
+
+    </dl>
+    <table id="table-products" class="table table-dark">
+        <thead>
+            <tr>
+                <td>Producto</td>
+                <td>Cantidad</td>
+                <td>SubTotal</td>
+            </tr>
+        </thead>
+        @foreach(Sucursales.Models.SalesProduct item in Model.saleProducts)
+        {
+            <tr>
+                <td>@item.Product.CodeBar - @item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>$@item.SubTotal</td>
+            </tr>
+        }
+    </table>
+    <div class="text-right">
+        <h2>Total</h2>
+        <h3 id="lbl-total">$@Model.Total</h3>
+    </div>
+</div>
