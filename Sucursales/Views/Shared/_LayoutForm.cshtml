@@ -10,10 +10,15 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="row row-cols-1 px-5 text-light">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @RenderBody()
+<div class="row row-cols-1 px-5 text-light">
+    <hr />
+    <div class="card bg-dark">
+        <div class="card-body text-right">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @RenderBody()
 
+        </div>
+        </div>
     </div>
-}
+
+        }

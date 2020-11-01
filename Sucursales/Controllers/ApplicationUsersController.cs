@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.BuilderProperties;
 using Sucursales.Models;
 
 namespace Sucursales.Controllers
@@ -18,25 +19,18 @@ namespace Sucursales.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ApplicationUsers
-        public ActionResult Index()
+        public ActionResult Index(string email = "",string username = "")
         {
-            var applicationUsers = db.Users;
+            var applicationUsers = db.Users.Where(u => u.Id != null);
+            if(email.Length > 0)
+            {
+                applicationUsers = applicationUsers.Where(a => a.Email.Contains(email));
+            }
+            if(username.Length > 0)
+            {
+                applicationUsers = applicationUsers.Where(a => a.UserName.Contains(username));
+            }
             return View(applicationUsers.ToList());
-        }
-
-        // GET: ApplicationUsers/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ApplicationUser applicationUser = db.Users.Find(id);
-            if (applicationUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicationUser);
         }
 
         // GET: ApplicationUsers/Create
@@ -113,32 +107,6 @@ namespace Sucursales.Controllers
                 return RedirectToAction("Index");
             }
             return View(registerViewModel);
-        }
-
-        // GET: ApplicationUsers/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ApplicationUser applicationUser = db.Users.Find(id);
-            if (applicationUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicationUser);
-        }
-
-        // POST: ApplicationUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            ApplicationUser applicationUser = db.Users.Find(id);
-            db.Users.Remove(applicationUser);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         public ActionResult Upsert(String id)

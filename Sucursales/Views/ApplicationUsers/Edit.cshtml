@@ -1,41 +1,42 @@
 ﻿@model Sucursales.Models.RegisterViewModel
 
 @{
-    ViewBag.Title = "Modificar";
+    ViewBag.Title = "Modificar empleado";
     Layout = "~/Views/Shared/_LayoutForm.cshtml";
 }
 
 
 @Html.HiddenFor(model => model.Id)
-<div class="form-group text-light">
-    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+<div class="row row-cols-3">
+    <div class="form-group text-light text-left">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+        <div class="">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
     </div>
-</div>
 
-<div class="form-group text-light">
-    @Html.LabelFor(model => model.UserName, "Nombre de usuario", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+    <div class="form-group text-light text-left">
+        @Html.LabelFor(model => model.UserName, "Nombre de usuario", htmlAttributes: new { @class = "control-label" })
+        <div class="">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
     </div>
-</div>
 
 
-<div class="form-group text-light">
-    @Html.LabelFor(model => model.Password, "Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+    <div class="form-group text-light text-left">
+        @Html.LabelFor(model => model.Password, "Contraseña", htmlAttributes: new { @class = "control-label" })
+        <div class="">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+        <span class="valid-feedback d-block text-light">*Si no deseas cambiar la contraseña deja en blanco</span>
     </div>
-    <span class="valid-feedback d-block text-light">*Si no deseas cambiar la contraseña deja en blanco</span>
+
 </div>
-
-
 <div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
+    <div class="col-12">
         <input type="submit" value="Guardar" class="btn btn-info" />
     </div>
 </div>

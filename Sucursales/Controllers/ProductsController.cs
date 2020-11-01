@@ -16,24 +16,22 @@ namespace Sucursales.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(string name = "",string price = "",string codebar= "")
         {
-            return View(db.Product.ToList());
-        }
-
-        // GET: Products/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
+            var product = db.Product.Where(p => p.Id != null);
+            if (name.Length > 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                product = product.Where( p=> p.Name.Contains(name));
             }
-            Product product = db.Product.Find(id);
-            if (product == null)
+            if (price.Length > 0)
             {
-                return HttpNotFound();
+                product = product.Where(p => p.Price.ToString().Contains(price));
             }
-            return View(product);
+            if (codebar.Length > 0)
+            {
+                product = product.Where(p => p.CodeBar.Contains(codebar));
+            }
+            return View(product.ToList());
         }
 
         // GET: Products/Create
@@ -90,33 +88,6 @@ namespace Sucursales.Controllers
             }
             return View(product);
         }
-
-        // GET: Products/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Product.Find(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Product product = db.Product.Find(id);
-            db.Product.Remove(product);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         public ActionResult Upsert(int id)
         {
             Product product = db.Product.Find(id);

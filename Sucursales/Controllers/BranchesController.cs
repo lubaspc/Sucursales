@@ -10,30 +10,25 @@ using Sucursales.Models;
 
 namespace Sucursales.Controllers
 {
+    [Authorize]
     public class BranchesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Branches
-        public ActionResult Index()
+        public ActionResult Index(string address= "",string name = "")
         {
             var branch = db.Branch.Include(b => b.Address);
-            return View(branch.ToList());
-        }
+            if (address.Length > 0)
+            {
+                branch = branch.Where(b => b.Address.FullAddress.Contains(address));
+            }
 
-        // GET: Branches/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
+            if (name.Length > 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                branch = branch.Where(b => b.Name.Contains(name));
             }
-            Branch branch = db.Branch.Find(id);
-            if (branch == null)
-            {
-                return HttpNotFound();
-            }
-            return View(branch);
+            return View(branch.ToList());
         }
 
         // GET: Branches/Create
@@ -96,32 +91,6 @@ namespace Sucursales.Controllers
                 return RedirectToAction("Index");
             }
             return View(branch);
-        }
-
-        // GET: Branches/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Branch branch = db.Branch.Find(id);
-            if (branch == null)
-            {
-                return HttpNotFound();
-            }
-            return View(branch);
-        }
-
-        // POST: Branches/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Branch branch = db.Branch.Find(id);
-            db.Branch.Remove(branch);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         public ActionResult Upsert(int id)

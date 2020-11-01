@@ -11,16 +11,33 @@ using Sucursales.Models;
 
 namespace Sucursales.Controllers
 {
+    [Authorize]
     public class SalesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Sales
-        public ActionResult Index()
+        public ActionResult Index(string branch = "",string total = "",string created = "",string username = "")
         {
             var sale = db.Sale
                 .Include(s => s.User)
                 .Include(s => s.Branch);
+            if (branch.Length > 0)
+            {
+                sale = sale.Where(p => p.Branch.Name.Contains(branch));
+            }
+            if (total.Length > 0)
+            {
+                sale = sale.Where(p => p.Total.ToString().Contains(total));
+            }
+            if (created.Length > 0)
+            {
+                sale = sale.Where(p => p.Created.ToString().Contains(created));
+            }
+            if (username.Length > 0)
+            {
+                sale = sale.Where(p => p.User.UserName.Contains(username));
+            }
             return View(sale.ToList());
         }
 
@@ -121,66 +138,6 @@ namespace Sucursales.Controllers
             ViewBag.BranchId = new SelectList(db.Branch, "Id", "Name", sale.BranchId);
             return View(sale);
         }
-
-        // GET: Sales/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Sale sale = db.Sale.Find(id);
-            if (sale == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.BranchId = new SelectList(db.Branch, "Id", "Name", sale.BranchId);
-            return View(sale);
-        }
-
-        // POST: Sales/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,BranchId,Total,Created,UserId")] Sale sale)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(sale).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.BranchId = new SelectList(db.Branch, "Id", "Name", sale.BranchId);
-            return View(sale);
-        }
-
-        // GET: Sales/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Sale sale = db.Sale.Find(id);
-            if (sale == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sale);
-        }
-
-        // POST: Sales/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Sale sale = db.Sale.Find(id);
-            db.Sale.Remove(sale);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

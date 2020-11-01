@@ -10,6 +10,7 @@ using Sucursales.Models;
 
 namespace Sucursales.Controllers
 {
+    [Authorize]
     public class StocksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -148,16 +149,6 @@ namespace Sucursales.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST: Stocks/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Stock stock = db.Stock.Find(id);
-            db.Stock.Remove(stock);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

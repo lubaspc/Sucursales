@@ -3,14 +3,34 @@
 @{
     ViewBag.Title = "Ventas";
 }
-
+@section Scripts
+{
+    <script>Utils.appliFilter()</script>
+}
 <h2 class="text-light">@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Nueva venta", "Create",null,new { @class= "btn btn-info"})
+    @Html.ActionLink("Nueva venta", "Create", null, new { @class = "btn btn-info" })
 </p>
 <table class="table table-dark">
     <thead>
+        <tr id="filters">
+            <th>
+                <input name="branch" placeholder="Sucursal" />
+            </th>
+            <th>
+                <input name="total" placeholder="Total" />
+            </th>
+            <th>
+                <input name="created" placeholder="Fecha de compra" />
+            </th>
+            <th>
+                <input name="username" placeholder="Vendedor" />
+            </th>
+            <th class="text-right">
+                @Html.ActionLink("Aplicar filtro", "Index", new { }, new { @class = "btn btn-info", @id = "btn-filter" })
+            </th>
+        </tr>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Branch.Name)
@@ -28,24 +48,25 @@
         </tr>
     </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Branch.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Total)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Detalle", "Details", new { id=item.Id },new { @class= "badge badge-info" })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "badge badge-info" })
+            </td>
+        </tr>
+    }
 
 </table>
